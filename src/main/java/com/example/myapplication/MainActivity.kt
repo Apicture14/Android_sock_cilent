@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.MovementMethod
+import android.text.method.ScrollingMovementMethod
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -12,6 +13,9 @@ import android.widget.TextView
 import java.lang.Exception
 import java.net.InetSocketAddress
 import java.net.Socket
+import org.json.JSONObject
+import java.net.DatagramPacket
+import java.net.DatagramSocket
 import java.net.SocketAddress
 import java.time.LocalDate
 import java.time.LocalTime
@@ -25,8 +29,9 @@ class MainActivity : AppCompatActivity() {
     var btn_c: Button? = null
     var btn_d: Button? = null
     var opt: EditText? = null
-    var pgr: ProgressBar? = null
-    var swt: Switch? = null
+    var min: EditText? = null
+    var btn_s: Button? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,28 +41,31 @@ class MainActivity : AppCompatActivity() {
         btn_c = findViewById<Button>(R.id.btn_Conn)
         btn_d = findViewById<Button>(R.id.btn_DisConn)
         opt = findViewById<EditText>(R.id.editTextTextMultiLine)
-        pgr = findViewById(R.id.progressBar)
-        swt = findViewById(R.id.switch_S)
+        min = findViewById(R.id.Min)
+        btn_s = findViewById(R.id.button_send)
+
         Bind()
 
-        opt!!.scrollBarSize = 20
+        opt!!.movementMethod = ScrollingMovementMethod.getInstance()
 
-
+        val sock = DatagramSocket()
+        sock.bind(InetSocketAddress(R.string.default_lhost.toString(), R.string.default_lport))
+        //opt!!.scrollBarSize = 20
     }
 
-    fun GetConn(): Socket? {
+    fun Send(): Socket? {
 
         try {
             val host = hin!!.text.toString()
             val port: Int = (findViewById<TextView>(R.id.Pin)).text.toString().toInt()
-            val sock: Socket = Socket()
+            val sock = DatagramSocket()
 
-            sock.bind(InetSocketAddress("0.0.0.0",60000))
-            sock.soTimeout = 10000
-            sock.connect(InetSocketAddress(host,port))
+            val target = InetSocketAddress(host,port)
 
-            log("connect success")
-            return sock
+            var outpack = DatagramPacket(ByteArray(0),0,target)
+
+
+
 
         } catch (ex: Exception) {
             log(ex.toString())
@@ -72,11 +80,6 @@ class MainActivity : AppCompatActivity() {
                 log("invalid socket")
             }
             val os = sock.getOutputStream()
-            os.write("hello".toByteArray())
-            os.flush()
-            os.write("bye".toByteArray())
-            os.flush()
-            os.close()
             log("success")
 
             sock.close()

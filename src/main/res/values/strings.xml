@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="default_host">0.0.0.0</string>
-    <string name="default_port">40000</string>
+    <string name="default_lhost">0.0.0.0</string>
+    <string name="default_lport">60000</string>
+    <string name="default_rhost">0.0.0.0</string>
+    <string name="default_rport">40000</string>
     <string name="default_timeout">20000</string>
 </resources>

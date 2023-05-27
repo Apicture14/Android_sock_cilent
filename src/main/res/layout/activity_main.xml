@@ -52,8 +52,8 @@
                 android:text="Connect" />
 
             <Space
-                android:layout_width="100dp"
-                android:layout_height="58dp"
+                android:layout_width="124dp"
+                android:layout_height="63dp"
                 android:layout_weight="1" />
 
             <Button
@@ -85,22 +85,25 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="113dp"
+            android:orientation="horizontal" >
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyle"
+            <EditText
+                android:id="@+id/Min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Switch
-                android:id="@+id/switch_S"
-                android:layout_width="wrap_content"
-                android:layout_height="41dp"
                 android:layout_weight="1"
-                android:text="Connected" />
+                android:ems="10"
+                android:inputType="text"
+                android:hint="Message to send"
+                android:text="" />
+
+            <Button
+                android:id="@+id/button_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Send" />
         </LinearLayout>
     </LinearLayout>
 
